@@ -1,0 +1,12 @@
+COQC = ~/Code/altUniMath/UniMath/sub/coq/bin/coqc
+COQDEP = ~/Code/altUniMath/UniMath/sub/coq/bin/coqdep
+-R . "sem"
+
+prelude/basics.v
+prelude/cubical_methods.v
+
+rezk/rezk.v
+rezk/rezk_principles.v
+rezk/rezk_encode_decode.v
+rezk/rezk_completion.v
+rezk/rezk_biadjunction.v
