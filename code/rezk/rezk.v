@@ -1,4 +1,11 @@
-(** The Rezk completion *)
+(**
+ The Rezk completion as a higher inductive type
+
+ We define the Rezk completion as a higher inductive type. To
+ encode higher inductive types, we use the trick using private
+ inductive types. The definition we use corresponds to the
+ definition in the HoTT book.
+ *)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 

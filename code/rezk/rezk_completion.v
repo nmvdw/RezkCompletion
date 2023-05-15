@@ -1,3 +1,7 @@
+(**
+ In this file, we show that the Rezk completion HIT gives rise
+ to a univalent category and we prove its universal property.
+ *)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 
@@ -655,6 +659,32 @@ Section universal_property.
     - exact rezk_completion_incl_is_functor.
   Defined.
 
+  Proposition fully_faithful_rezk_completion_incl
+    : fully_faithful rezk_completion_incl.
+  Proof.
+    intros x y.
+    use isweq_iso.
+    - exact (λ f, f).
+    - abstract
+        (intro f ;
+         apply idpath).
+    - abstract
+        (intro f ;
+         apply idpath).
+  Defined.
+
+  Proposition essentially_surjective_rezk_completion_incl
+    : essentially_surjective rezk_completion_incl.
+  Proof.
+    use rezk_ind_prop.
+    - intro y ; cbn.
+      apply hinhpr.
+      refine (y ,, _).
+      apply identity_z_iso.
+    - intro x.
+      apply propproperty.
+  Defined.
+  
   Section functor.
     Context {D : univalent_category}
            (F : C ⟶ D).

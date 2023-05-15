@@ -1,3 +1,7 @@
+(**
+ We use the encode-decode method to characterize the path space
+ of the Rezk completion.
+ *)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 

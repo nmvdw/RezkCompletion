@@ -1,3 +1,7 @@
+(**
+ In this file, we derive numerous alternative induction
+ and recursion principles for the Rezk completion.
+ *)
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 

@@ -1,5 +1,5 @@
-COQC = ~/Code/altUniMath/UniMath/sub/coq/bin/coqc
-COQDEP = ~/Code/altUniMath/UniMath/sub/coq/bin/coqdep
+COQC = coqc
+COQDEP = coqdep
 -R . "sem"
 
 prelude/basics.v
