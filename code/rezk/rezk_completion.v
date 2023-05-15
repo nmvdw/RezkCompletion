@@ -684,7 +684,7 @@ Section universal_property.
     - intro x.
       apply propproperty.
   Defined.
-  
+
   Section functor.
     Context {D : univalent_category}
            (F : C ⟶ D).
