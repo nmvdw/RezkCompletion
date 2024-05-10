@@ -165,6 +165,47 @@ Section rezk_completion.
 
   Opaque r_hom.
 
+  (** Path over lemmas for the homs of the Rezk completion *)
+  Proposition PathOver_r_hom_l
+              (x : C)
+              {y₁ y₂ : C}
+              (g : z_iso y₁ y₂)
+              (f : x --> y₁)
+              (f' : x --> y₂)
+              (p : f · g = f')
+    : @PathOver _ _ _ (rcleq C g) (λ z, r_hom (rcl C x) z) f f'.
+  Proof.
+    use transportf_to_pathover.
+    rewrite functtransportf.
+    rewrite r_hom_r_rcleq.
+    rewrite transport_path_hset.
+    cbn.
+    exact p.
+  Qed.
+
+  Proposition PathOver_r_hom_r
+              {x₁ x₂ : C}
+              (g : z_iso x₁ x₂)
+              (y : C)
+              (f : x₁ --> y)
+              (f' : x₂ --> y)
+              (p : g · f' = f)
+    : @PathOver _ _ _ (rcleq C g) (λ z, r_hom z (rcl C y)) f f'.
+  Proof.
+    use transportf_to_pathover.
+    rewrite functtransportf.
+    rewrite r_hom_l_rcleq.
+    rewrite transport_path_hset.
+    cbn.
+    rewrite <- p.
+    unfold right_action.
+    rewrite !assoc.
+    refine (_ @ id_left _).
+    apply maponpaths_2.
+    exact (z_iso_after_z_iso_inv g).
+  Qed.
+
+  
   Definition r_hom_id : ∏ (x : rezk C), r_hom x x.
   Proof.
     simple refine (rezk_ind_set (λ x, r_hom x x) _ _ _).
@@ -633,7 +674,7 @@ Section universal_property.
   
   Opaque r_hom.
   
-  Definition rezk_completion_incl_data
+  Definition to_rezk_completion_data
     : functor_data C (rezk_completion C).
   Proof.
     use make_functor_data.
@@ -641,8 +682,8 @@ Section universal_property.
     - exact (λ x y f, f).
   Defined.
 
-  Definition rezk_completion_incl_is_functor
-    : is_functor rezk_completion_incl_data.
+  Definition to_rezk_completion_is_functor
+    : is_functor to_rezk_completion_data.
   Proof.
     split.
     - intro x.
@@ -651,16 +692,16 @@ Section universal_property.
       apply idpath.
   Qed.
     
-  Definition rezk_completion_incl
+  Definition to_rezk_completion
     : C ⟶ rezk_completion C.
   Proof.
     use make_functor.
-    - exact rezk_completion_incl_data.
-    - exact rezk_completion_incl_is_functor.
+    - exact to_rezk_completion_data.
+    - exact to_rezk_completion_is_functor.
   Defined.
 
-  Proposition fully_faithful_rezk_completion_incl
-    : fully_faithful rezk_completion_incl.
+  Proposition fully_faithful_to_rezk_completion
+    : fully_faithful to_rezk_completion.
   Proof.
     intros x y.
     use isweq_iso.
@@ -673,8 +714,8 @@ Section universal_property.
          apply idpath).
   Defined.
 
-  Proposition essentially_surjective_rezk_completion_incl
-    : essentially_surjective rezk_completion_incl.
+  Proposition essentially_surjective_to_rezk_completion
+    : essentially_surjective to_rezk_completion.
   Proof.
     use rezk_ind_prop.
     - intro y ; cbn.
@@ -865,7 +906,7 @@ Section universal_property.
     Defined.
 
     Definition rezk_completion_commute_nat_trans
-      : rezk_completion_incl ∙ rezk_completion_functor ⟹ F.
+      : to_rezk_completion ∙ rezk_completion_functor ⟹ F.
     Proof.
       use make_nat_trans.
       - exact (λ x, identity _).
@@ -876,7 +917,7 @@ Section universal_property.
 
     Definition rezk_completion_commute_nat_z_iso
       : nat_z_iso
-          (rezk_completion_incl ∙ rezk_completion_functor)
+          (to_rezk_completion ∙ rezk_completion_functor)
           F.
     Proof.
       use make_nat_z_iso.
@@ -888,8 +929,8 @@ Section universal_property.
 
   Section nat_trans.
     Context {D : univalent_category}
-           {F G : rezk_completion C ⟶ D}
-           (α : rezk_completion_incl ∙ F ⟹ rezk_completion_incl ∙ G).
+            {F G : rezk_completion C ⟶ D}
+            (α : to_rezk_completion ∙ F ⟹ to_rezk_completion ∙ G).
 
     Definition rezk_completion_nat_trans_data_po
               {x₁ x₂ : C}

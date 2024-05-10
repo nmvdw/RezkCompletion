@@ -2,7 +2,15 @@
 Require Import UniMath.Foundations.All.
 Require Import UniMath.MoreFoundations.All.
 
+Require Import UniMath.CategoryTheory.Core.Prelude.
+Require Import UniMath.CategoryTheory.Monoidal.Categories.
+
 Require Import UniMath.Bicategories.Core.Examples.OneTypes.
+
+Import MonoidalNotations.
+
+Local Open Scope cat.
+Local Open Scope moncat.
 
 Definition path_rotate_lr
            {A : UU}
@@ -622,6 +630,19 @@ Proof.
            u).
 Defined.
 
+Definition transport_path_hset'
+           {A B : hSet}
+           (f : A ≃ B)
+           (u : B)
+  : transportb (λ (X : hSet), X) (@path_HLevel 2 _ _ f) u
+    =
+    invmap f u.
+Proof.
+  refine (_ @ transport_path_hset (invweq f) u).
+  rewrite path_HLevel_inv.
+  apply idpath.
+Qed.
+
 (** On quotient *)
 Definition setquotuniv'
            {X : UU}
@@ -672,5 +693,83 @@ Proof.
     apply isaprop_iseqrel.
   }
   induction pH.
+  apply idpath.
+Qed.
+
+Definition PathOver_mor
+           {C : category}
+           {A : UU}
+           {a₁ a₂ : A}
+           (p : a₁ = a₂)
+           {F G : A → C}
+           (f : F a₁ --> G a₁)
+           (g : F a₂ --> G a₂)
+           (q : f · idtoiso (maponpaths G p)
+                =
+                idtoiso (maponpaths F p) · g)
+  : @PathOver _ _ _ p (λ a, F a --> G a) f g.
+Proof.
+  induction p ; cbn in *.
+  rewrite id_left, id_right in q.
+  exact q.
+Qed.
+
+Proposition maponpaths_diag
+            {A B : UU}
+            (f : A → A → B)
+            {a₁ a₂ : A}
+            (p : a₁ = a₂)
+  : maponpaths (λ a, f a a) p
+    =
+    maponpaths (λ z, f z _) p @ maponpaths (λ z, f _ z) p.
+Proof.
+  induction p ; cbn.
+  apply idpath.
+Qed.
+
+Proposition maponpaths_tensor_l
+            {V : monoidal_cat}
+            {A : UU}
+            (f : A → V)
+            {x₁ x₂ : A}
+            (p : x₁ = x₂)
+            (y : V)
+  : pr1 (idtoiso (maponpaths (λ z, f z ⊗ y) p))
+    =
+    idtoiso (maponpaths f p) #⊗ identity _.
+Proof.
+  induction p ; cbn.
+  rewrite tensor_id_id.
+  apply idpath.
+Qed.
+
+Proposition maponpaths_tensor_r
+            {V : monoidal_cat}
+            {A : UU}
+            (f : A → V)
+            (x : V)
+            {y₁ y₂ : A}
+            (p : y₁ = y₂)
+  : pr1 (idtoiso (maponpaths (λ z, x ⊗ f z) p))
+    =
+    identity _ #⊗ idtoiso (maponpaths f p).
+Proof.
+  induction p ; cbn.
+  rewrite tensor_id_id.
+  apply idpath.
+Qed.
+
+Proposition maponpaths_tensor_lr
+            {V : monoidal_cat}
+            {A : UU}
+            (f g : A → V)
+            {x₁ x₂ : A}
+            (p : x₁ = x₂)
+  : pr1 (idtoiso (maponpaths (λ z, f z ⊗ g z) p))
+    =
+    idtoiso (maponpaths f p) #⊗ idtoiso (maponpaths g p).
+Proof.
+  induction p ; cbn.
+  rewrite tensor_id_id.
   apply idpath.
 Qed.

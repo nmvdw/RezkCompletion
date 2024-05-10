@@ -10,3 +10,4 @@ rezk/rezk_principles.v
 rezk/rezk_encode_decode.v
 rezk/rezk_completion.v
 rezk/rezk_biadjunction.v
+rezk/enriched.v

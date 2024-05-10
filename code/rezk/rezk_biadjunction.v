@@ -74,7 +74,7 @@ Proof.
   use make_left_universal_arrow'.
   - exact univalent_cat_is_univalent_2_1.
   - exact (λ C, rezk_completion_univ_cat C).
-  - exact (λ C, rezk_completion_incl C).
+  - exact (λ C, to_rezk_completion C).
   - refine (λ C₁ C₂ F G α, rezk_completion_nat_trans _ α ,, _).
     abstract
       (use nat_trans_eq ; [ apply homset_property | ] ;
