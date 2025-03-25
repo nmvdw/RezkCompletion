@@ -13,6 +13,7 @@
  5. The laws
  6. The enrichment
  7. Enriched functor to the Rezk completion
+ 8. Bundled version
 
  **********************************************************************************)
 Require Import UniMath.Foundations.All.
@@ -464,4 +465,29 @@ Section EnrichedRezk.
     intros x y ; cbn.
     apply is_z_isomorphism_identity.
   Defined.
+
+  Proposition weak_equivalence_enrichment_to_rezk_completion
+    : enriched_weak_equivalence enrichment_to_rezk_completion.
+  Proof.
+    split.
+    - exact (essentially_surjective_to_rezk_completion C).
+    - exact fully_faithful_enrichment_to_rezk_completion.
+  Defined.
+
+  (** * 8. Bundled version *)
+  Definition enriched_rezk_completion_bundled
+    : ∑ (RC : univalent_category)
+        (ERC : enrichment RC V)
+        (F : C ⟶ RC)
+        (EF : functor_enrichment F E ERC),
+      enriched_weak_equivalence EF
+    := rezk_completion_univ_cat C
+       ,,
+       enrichment_rezk_completion
+       ,,
+       to_rezk_completion C
+       ,,
+       enrichment_to_rezk_completion
+       ,,
+       weak_equivalence_enrichment_to_rezk_completion.
 End EnrichedRezk.
