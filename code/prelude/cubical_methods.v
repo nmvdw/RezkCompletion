@@ -33,7 +33,7 @@ Definition PathOver_to_path_isweq
            (c₁ : C a₁) (c₂ : C a₂)
   : isweq (@PathOver_to_path A C a₁ a₂ p c₁ c₂).
 Proof.
-  use gradth.
+  use isweq_iso.
   - exact path_to_PathOver.
   - intros q.
     induction p.
@@ -75,7 +75,7 @@ Section operations.
          {c₁ c₂ : C}
     : isweq (@PathOver_const A C a₁ a₂ p c₁ c₂).
   Proof.
-    use gradth.
+    use isweq_iso.
     - exact (PathOverConstant_map1 p).
     - intros q.
       induction p.
@@ -114,7 +114,7 @@ Section operations.
          {c₁ : C (f a₁)} {c₂ : C (f a₂)}
     : isweq (@PathOver_compose A B C f a₁ a₂ p c₁ c₂).
   Proof.
-    use gradth.
+    use isweq_iso.
     - exact (compose_PathOver f).
     - intros q.
       induction p.

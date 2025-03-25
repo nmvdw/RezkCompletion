@@ -2,6 +2,8 @@ COQC = coqc
 COQDEP = coqdep
 -R . "sem"
 
+-arg "-w -notation-overridden -type-in-type"
+
 prelude/basics.v
 prelude/cubical_methods.v
 

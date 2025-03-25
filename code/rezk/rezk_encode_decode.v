@@ -38,7 +38,7 @@ Section rezk_iso.
             (g : z_iso y₁ y₂)
     : isweq (iso_right_action x g).
   Proof.
-    use gradth.
+    use isweq_iso.
     - exact (iso_right_action_inv x g).
     - abstract
         (intros h ; cbn ;
@@ -73,7 +73,7 @@ Section rezk_iso.
             (g : z_iso y₁ y₂)
     : isweq (iso_left_action x g).
   Proof.
-    use gradth.
+    use isweq_iso.
     - exact (iso_left_action_inv x g).
     - abstract
         (intros h ; cbn ;
@@ -302,7 +302,7 @@ Section rezk_iso.
     : ∏ {x y : rezk C}, isweq (encode_rezk x y).
   Proof.
     intros x y.
-    use gradth.
+    use isweq_iso.
     - exact (decode_rezk x y).
     - intros z.
       apply decode_rezk_encode_rezk.

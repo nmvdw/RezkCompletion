@@ -39,7 +39,7 @@ Section rezk_completion.
             (g : z_iso y₁ y₂)
     : isweq (right_action x g).
   Proof.
-    use gradth.
+    use isweq_iso.
     - exact (right_action_inv x g).
     - abstract
         (intros h ; cbn ;
@@ -72,7 +72,7 @@ Section rezk_completion.
             (g : z_iso y₁ y₂)
     : isweq (left_action x g).
   Proof.
-    use gradth.
+    use isweq_iso.
     - exact (left_action_inv x g).
     - abstract
         (intros h ; cbn ;
@@ -616,12 +616,11 @@ Section rezk_completion.
            (x y : rezk_completion)
     : r_iso C x y ≃ z_iso x y.
   Proof.
-    use make_weq.
+    use weq_iso.
     - exact r_iso_to_z_iso.
-    - use gradth.
-      + exact z_iso_to_r_iso.
-      + exact r_iso_to_z_iso_to_r_iso.
-      + exact z_iso_to_r_iso_to_z_iso.
+    - exact z_iso_to_r_iso.
+    - exact r_iso_to_z_iso_to_r_iso.
+    - exact z_iso_to_r_iso_to_z_iso.
   Defined.
   
   Definition is_univalent_rezk_completion

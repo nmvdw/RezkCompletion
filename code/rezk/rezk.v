@@ -80,7 +80,7 @@ Module Export rezk.
                      (rcleqY x₂ x₃ f₂)))
             (truncY : ∏ (x : rezk C), isofhlevel 3 (Y x)).
     
-    Fixpoint rezk_ind (x : rezk C) : Y x
+    Definition rezk_ind (x : rezk C) : Y x
       := (match x with
          | rcl _ a => fun _ _ _ _ => rclY a
           end) rcleqY reY rconcatY truncY.
